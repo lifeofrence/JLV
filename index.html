@@ -54,8 +54,9 @@
 
         <nav class="navbar navbar-expand-lg">
             <div class="container">
+
                 <a class="navbar-brand" href="index.html">
-                    JenniferLamiVisuals
+                    <img src="images/logo.png" class="logo img-fluid" alt="JenniferLamiVisuals Logo">
                 </a>
 
                 <a href="ticket.html" class="btn custom-btn d-lg-none ms-auto me-4">Book Now</a>
@@ -101,7 +102,7 @@
                 <div class="row">
 
                     <div class="col-12 mt-auto mb-5 text-center">
-                        <small>Professional Videography Services</small>
+                        <!-- <small>Creating cinematic visuals + iPhone powered reels & TikTok for a timeless experience.</small> -->
 
                         <!-- <h1 class="text-white mb-5">Capture Your Moments</h1> -->
 
@@ -109,19 +110,19 @@
                     </div>
 
                     <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
-                        <div class="date-wrap">
+                        <!-- <div class="date-wrap">
                             <h5 class="text-white">
                                 <i class="custom-icon bi-camera me-2"></i>
                                 Premium Quality Video
                             </h5>
-                        </div>
+                        </div> -->
 
-                        <div class="location-wrap mx-auto py-3 py-lg-0">
+                        <!-- <div class="location-wrap mx-auto py-3 py-lg-0">
                             <h5 class="text-white">
                                 <i class="custom-icon bi-star me-2"></i>
                                 Professional Editing
                             </h5>
-                        </div>
+                        </div> -->
 
                         <div class="social-share">
                             <ul class="social-icon d-flex align-items-center justify-content-center">
@@ -151,12 +152,14 @@
             </div>
 
             <div class="video-wrap">
-                <video autoplay="" loop="" muted="" class="custom-video" poster="">
+                <!-- <video autoplay="" loop="" muted="" class="custom-video" poster="">
                     <source src="video/pexels-2022395.mp4" type="video/mp4">
 
                     Your browser does not support the video tag.
-                </video>
+                </video> -->
+                  <img src="images/hero.png" class="custom-video img-fluid" alt="">
             </div>
+            
         </section>
 
 
@@ -168,21 +171,28 @@
                         <div class="services-info">
                             <h2 class="text-white mb-4">About JenniferLamiVisuals</h2>
 
-                            <p class="text-white">JenniferLamiVisuals specializes in cinematic videography for weddings, events, corporate videos, and commercial content. We bring your vision to life with professional equipment and creative storytelling.</p>
+                            <p class="text-white">
+                                A documentary-trained eye that finds beauty in unscripted moments, I capture weddings, events, lifestyle and brands with cinematic storytelling and professional polish. Full wedding films, event highlights, brand promos — emotional, timeless, high-end.
+                            </p>
 
-                            <h6 class="text-white mt-4">Cinematic Storytelling</h6>
+                            <!-- <h6 class="text-white mt-4">Cinematic Storytelling</h6> -->
 
-                            <p class="text-white">Every project tells a unique story. We combine technical expertise with artistic vision to create compelling videos that resonate with your audience.</p>
+                            <p class="text-white">
+                                But I also live in the fast world of social media. Using just my iPhone, I create scroll-stopping, trend-native Reels, TikToks, and Instagram Stories for events and brands in real time. From golden-hour transitions and viral audio syncs to behind-the-scenes 
+                            </p>
 
-                            <h6 class="text-white mt-4">Professional Equipment</h6>
+                            <!-- <h6 class="text-white mt-4">Professional Equipment</h6> -->
 
-                            <p class="text-white">We use state-of-the-art cameras, drones, and editing software to deliver stunning visual content that exceeds expectations.</p>
+                            <p class="text-white">
+                               Whether you're a couple wanting a timeless wedding film + instant social magic, a brand needing polished campaign footage + trendy short-form content, or an event host looking to amplify every moment — I'm here to make your story look and feel incredible.
+
+                            </p>
                         </div>
                     </div>
 
                     <div class="col-lg-6 col-12">
                         <div class="about-text-wrap">
-                            <img src="images/ceo.jpg" class="about-image img-fluid">
+                            <img src="images/ceo.png" class="about-image img-fluid">
 
                             <div class="about-text-info d-flex">
                                 <div class="d-flex">
@@ -350,208 +360,262 @@
             <div class="container">
                 <div class="rate-card-header">
                     <h2>JenniferLami Visuals</h2>
-                    <div class="subtitle">Rate Card</div>
+                    <div class="subtitle">Pricing Card</div>
                 </div>
-
-                <div class="rate-card-row">
-                    <!-- Bundle 1 -->
-                    <div class="rate-card rate-card-white">
-                        <h3>Bundle 1</h3>
-                        <div class="price">$250</div>
-                        <div class="sub-price">2-4 Hours Coverage</div>
-
-                        <div class="rate-feature">
-                            <i class="bi-play-btn"></i>
-                            <span>1 Highlight</span>
-                            <small>(1-2 Mins)</small>
+                <!-- Category Cards (Always Visible) -->
+                <div class="category-cards-container">
+                    <!-- Wedding Package Card -->
+                    <div class="category-card" onclick="togglePricing('wedding')">
+                        <div class="category-icon">
+                            <i class="bi-heart-fill"></i>
                         </div>
-
-                        <div class="rate-feature">
-                            <i class="bi-collection-play"></i>
-                            <span>2 Reels/Teaser</span>
+                        <h3>Wedding Package</h3>
+                        <p>Cinematic wedding films & social content</p>
+                        <div class="category-arrow">
+                            <i class="bi-chevron-down" id="wedding-arrow"></i>
                         </div>
                     </div>
 
-                    <!-- Bundle 2 (Center Black) -->
-                    <div class="rate-card rate-card-black">
-                        <h3>Bundle 2</h3>
-                        <div class="price">$500</div>
-                        <div class="sub-price">Full Event Coverage</div>
-
-                        <div class="rate-feature">
-                            <i class="bi-play-btn-fill"></i>
-                            <span>1 Highlight</span>
-                            <small>(1-3 Mins)</small>
+                    <!-- Lifestyle & Brand Package Card -->
+                    <div class="category-card" onclick="togglePricing('lifestyle')">
+                        <div class="category-icon">
+                            <i class="bi-camera-fill"></i>
                         </div>
-
-                        <div class="rate-feature">
-                            <i class="bi-collection-play-fill"></i>
-                            <span>3 Reels/Teaser</span>
-                        </div>
-
-                        <div class="rate-feature">
-                            <i class="bi-camera-reels-fill"></i>
-                            <span>BTS/Transition</span>
-                            <small>TikTok/IG Trend</small>
+                        <h3>Lifestyle & Brand Package</h3>
+                        <p>Professional shoots & ad campaigns</p>
+                        <div class="category-arrow">
+                            <i class="bi-chevron-down" id="lifestyle-arrow"></i>
                         </div>
                     </div>
 
-                    <!-- Bundle 3 -->
-                    <div class="rate-card rate-card-white">
-                        <h3>Bundle 3</h3>
-                        <div class="price">$300</div>
-                        <div class="sub-price">2-4 Hours Coverage</div>
-
-                        <div class="rate-feature">
-                            <i class="bi-play-btn"></i>
-                            <span>1 Highlight</span>
-                            <small>(1-3 Mins)</small>
+                    <!-- Event Package Card -->
+                    <div class="category-card" onclick="togglePricing('event')">
+                        <div class="category-icon">
+                            <i class="bi-calendar-event-fill"></i>
                         </div>
-
-                        <div class="rate-feature">
-                            <i class="bi-collection-play"></i>
-                            <span>2 Reels/Teaser</span>
-                        </div>
-
-                        <div class="rate-feature">
-                            <i class="bi-phone"></i>
-                            <span>TikTok/IG Trend</span>
+                        <h3>Event Package</h3>
+                        <p>Full event coverage & highlights</p>
+                        <div class="category-arrow">
+                            <i class="bi-chevron-down" id="event-arrow"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center mt-4 mb-4" id="btn-show-row-2">
-                    <button class="btn rate-card-see-more-btn" onclick="document.getElementById('pricing-row-2').style.display='flex'; document.getElementById('btn-show-row-2').style.display='none'; document.getElementById('btn-show-row-3').style.display='block';">See More</button>
-                </div>
+                <!-- Wedding Package Pricing (Hidden by default) -->
+                <div class="pricing-details" id="wedding-pricing" style="display:none;">
+                    <div class="rate-card-row">
+                        <!-- Bundle 1 -->
+                        <div class="rate-card rate-card-white">
+                            <h3>Basic Wedding</h3>
+                            <div class="price">$1200</div>
+                            <div class="sub-price">5-6 Hours Coverage</div>
 
-                <div class="rate-card-row" id="pricing-row-2" style="display:none;">
-                    <!-- Bundle 1 -->
-                    <div class="rate-card rate-card-white">
-                        <h3>PHOTOSHOOT</h3>
-                        <div class="price">$250</div>
-                        <div class="sub-price">2-4 Hours Coverage</div>
+                            <div class="rate-feature">
+                                <i class="bi-play-btn"></i>
+                                <span>5-10 mins full length</span>
+                            </div>
 
-                      
+                            <div class="rate-feature">
+                                <i class="bi-film"></i>
+                                <span>1 Highlight</span>
+                            </div>
 
-                        <div class="rate-feature">
-                            <i class="bi-collection-play"></i>
-                            <span>2-3 VISUUALS</span>
-                        </div>
-                    </div>
+                            <div class="rate-feature">
+                                <i class="bi-collection-play"></i>
+                                <span>2 Reels</span>
+                            </div>
 
-                    <!-- Bundle 2 (Center Black) -->
-                    <div class="rate-card rate-card-black">
-                        <h3>AD CAMPAIGN</h3>
-                        <div class="price">$500</div>
-                        <div class="sub-price">3-5 HOURS SHOOT</div>
-
-                        <div class="rate-feature">
-                            <i class="bi-play-btn-fill"></i>
-                            <span>1 AD VISUALS</span>
-                            
-                        </div>
-
-                        <div class="rate-feature">
-                            <i class="bi-collection-play-fill"></i>
-                            <span>2 Teaser</span>
+                            <div class="rate-feature">
+                                <i class="bi-camera-video"></i>
+                                <span>1 Snippet</span>
+                            </div>
                         </div>
 
-                       
-                    </div>
+                        <!-- Bundle 2 (Center Black) -->
+                        <div class="rate-card rate-card-black">
+                            <h3>Premium Wedding</h3>
+                            <div class="price">$2000</div>
+                            <div class="sub-price">Full Event Coverage</div>
 
-                    <!-- Bundle 3 -->
-                    <div class="rate-card rate-card-white">
-                        <h3>PRODUCT SHOOT 3</h3>
-                        <div class="price">$200</div>
-                        <div class="sub-price">3 Hours Coverage</div>
+                            <div class="rate-feature">
+                                <i class="bi-play-btn-fill"></i>
+                                <span>10-15 mins full length</span>
+                            </div>
 
-                        <div class="rate-feature">
-                            <i class="bi-play-btn"></i>
-                            <span>2-3 VISUALS </span>
-                            <!-- <small>(1-3 Mins)</small> -->
+                            <div class="rate-feature">
+                                <i class="bi-film"></i>
+                                <span>2 Highlights</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play-fill"></i>
+                                <span>4 Reels</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-camera-video-fill"></i>
+                                <span>2 Snippets</span>
+                            </div>
                         </div>
 
-                        <div class="rate-feature">
-                            <i class="bi-collection-play"></i>
-                            <span>2 Reels/Teaser</span>
+                        <!-- Bundle 3 -->
+                        <div class="rate-card rate-card-white">
+                            <h3>Standard Wedding</h3>
+                            <div class="price">$500</div>
+                            <div class="sub-price">5-6 Hours Coverage</div>
+
+                            <div class="rate-feature">
+                                <i class="bi-play-btn"></i>
+                                <span>1 Highlight</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play"></i>
+                                <span>3 Reels</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-camera-video"></i>
+                                <span>1 Snippet</span>
+                            </div>
                         </div>
-
-                       
-                    </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4 mb-4" id="btn-show-row-3" style="display:none;"> <!-- Initially hidden, shown when row 2 appears via JS if needed, but for simplicity let's make row 2 show this button -->
-                     <!-- Actually, allow me to just place it inside row 2 wrapper or just control it via JS better. 
-                          Let's keep it simple: When Row 2 opens, we want a new 'See More' button to appear to show Row 3. 
-                          I'll add the button after Row 2, but initially hidden. The first button's onclick will show Row 2 AND this button. -->
-                     <button class="btn rate-card-see-more-btn" onclick="document.getElementById('pricing-row-3').style.display='flex'; document.getElementById('btn-show-row-3').style.display='none';">See More</button>
-                </div>
-                
-                <!-- We need to update the first button to also show 'btn-show-row-3' so the flow continues. -->
-                
-                <div class="rate-card-row" id="pricing-row-3" style="display:none;">
-                    <!-- Bundle 1 -->
-                    <div class="rate-card rate-card-white">
-                        <h3>Bundle 1</h3>      <h6>VIDEOGRAPHY 1</h6>
-                        <div class="price">$1200</div>
-                        <div class="sub-price">5-6 Hours Coverage</div>
-
-                        <div class="rate-feature">
-                            <i class="bi-play-btn"></i>
-                              <span>5-10 mins full length</span>
-                            <span>1 Highlight</span>
-                              <span>2 REELS</span>
-                                <span>1 SNIPPET</span>
-
-                        
-                        </div>
-
-                       
-                    </div>
-
-                    <!-- Bundle 2 (Center Black) -->
-                    <div class="rate-card rate-card-black">
-                        <h3>Bundle 2</h3>
-                        <h6>VIDEOGRAPHY/CONTENT COMBO</h6>
-                        <div class="price">$2000</div>
-                        <div class="sub-price">Full Event Coverage</div>
-
-                        <div class="rate-feature">
-                            <i class="bi-play-btn-fill"></i>
-                             <span>10-15 mins full length</span>
-                            <span>2 Highlight</span>
-                              <span>4 REELS</span>
-                                <span>2 SNIPPET</span>
-                        </div>
-
-                        
-
-                       
-                    </div>
-
-                    <!-- Bundle 3 -->
-                    <div class="rate-card rate-card-white">
-                        <h3>Bundle 3</h3>
-                        <h6>CONTENT CREATION</h6>
-                        <div class="price">$500</div>
-                        <div class="sub-price">5-6 Hours Coverage</div>
-
-                        <div class="rate-feature">
-                            <i class="bi-play-btn"></i>
-                
-                            <span>1 Highlight</span>
-                              <span>3 REELS</span>
-                                <span>1 SNIPPET</span>
-                        </div>
-
-                        
                     </div>
                 </div>
 
-                <div class="rate-card-footer">
+                <!-- Lifestyle & Brand Package Pricing (Hidden by default) -->
+                <div class="pricing-details" id="lifestyle-pricing" style="display:none;">
+                    <div class="rate-card-row">
+                        <!-- Bundle 1 -->
+                        <div class="rate-card rate-card-white">
+                            <h3>Photoshoot</h3>
+                            <div class="price">$250</div>
+                            <div class="sub-price">2-4 Hours Coverage</div>
+
+                            <div class="rate-feature">
+                                <i class="bi-camera"></i>
+                                <span>2-3 Visuals</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play"></i>
+                                <span>Professional Editing</span>
+                            </div>
+                        </div>
+
+                        <!-- Bundle 2 (Center Black) -->
+                        <div class="rate-card rate-card-black">
+                            <h3>Ad Campaign</h3>
+                            <div class="price">$500</div>
+                            <div class="sub-price">3-5 Hours Shoot</div>
+
+                            <div class="rate-feature">
+                                <i class="bi-play-btn-fill"></i>
+                                <span>1 Ad Visual</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play-fill"></i>
+                                <span>2 Teasers</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-megaphone-fill"></i>
+                                <span>Social Media Ready</span>
+                            </div>
+                        </div>
+
+                        <!-- Bundle 3 -->
+                        <div class="rate-card rate-card-white">
+                            <h3>Product Shoot</h3>
+                            <div class="price">$200</div>
+                            <div class="sub-price">3 Hours Coverage</div>
+
+                            <div class="rate-feature">
+                                <i class="bi-camera"></i>
+                                <span>2-3 Visuals</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play"></i>
+                                <span>2 Reels/Teaser</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Package Pricing (Hidden by default) -->
+                <div class="pricing-details" id="event-pricing" style="display:none;">
+                    <div class="rate-card-row">
+                        <!-- Bundle 1 -->
+                        <div class="rate-card rate-card-white">
+                            <h3>Basic Event</h3>
+                            <div class="price">$250</div>
+                            <div class="sub-price">2-4 Hours Coverage</div>
+
+                            <div class="rate-feature">
+                                <i class="bi-play-btn"></i>
+                                <span>1 Highlight</span>
+                                <small>(1-2 Mins)</small>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play"></i>
+                                <span>2 Reels/Teaser</span>
+                            </div>
+                        </div>
+
+                        <!-- Bundle 2 (Center Black) -->
+                        <div class="rate-card rate-card-black">
+                            <h3>Premium Event</h3>
+                            <div class="price">$500</div>
+                            <div class="sub-price">Full Event Coverage</div>
+
+                            <div class="rate-feature">
+                                <i class="bi-play-btn-fill"></i>
+                                <span>1 Highlight</span>
+                                <small>(1-3 Mins)</small>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play-fill"></i>
+                                <span>3 Reels/Teaser</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-camera-reels-fill"></i>
+                                <span>BTS/Transition</span>
+                                <small>TikTok/IG Trend</small>
+                            </div>
+                        </div>
+
+                        <!-- Bundle 3 -->
+                        <div class="rate-card rate-card-white">
+                            <h3>Standard Event</h3>
+                            <div class="price">$300</div>
+                            <div class="sub-price">2-4 Hours Coverage</div>
+
+                            <div class="rate-feature">
+                                <i class="bi-play-btn"></i>
+                                <span>1 Highlight</span>
+                                <small>(1-3 Mins)</small>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-collection-play"></i>
+                                <span>2 Reels/Teaser</span>
+                            </div>
+
+                            <div class="rate-feature">
+                                <i class="bi-phone"></i>
+                                <span>TikTok/IG Trend</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="rate-card-footer">
                     Jan-May 2026
-                </div>
+                </div> -->
             </div>
         </section>
 

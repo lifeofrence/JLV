@@ -35,4 +35,33 @@
 
 })(window.jQuery);
 
+// Pricing Category Toggle
+function togglePricing(category) {
+  var pricingElement = document.getElementById(category + '-pricing');
+  var categoryCards = document.querySelectorAll('.category-card');
+  var clickedCard = event.currentTarget;
 
+  // Check if this category is currently open
+  var isOpen = pricingElement.style.display === 'block';
+
+  // Close all pricing details
+  document.querySelectorAll('.pricing-details').forEach(function (el) {
+    el.style.display = 'none';
+  });
+
+  // Remove active class from all category cards
+  categoryCards.forEach(function (card) {
+    card.classList.remove('active');
+  });
+
+  // If it wasn't open, open it and add active class
+  if (!isOpen) {
+    pricingElement.style.display = 'block';
+    clickedCard.classList.add('active');
+
+    // Smooth scroll to pricing details
+    setTimeout(function () {
+      pricingElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+}
