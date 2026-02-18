@@ -358,10 +358,10 @@ strong {
 
 @keyframes heroZoom {
   from {
-    transform: translate(-50%, -50%) scale(0.4);
+    transform: translate(-50%, -50%) scale(0.2);
   }
   to {
-    transform: translate(-50%, -50%) scale(1.0);
+    transform: translate(-50%, -50%) scale(0.6);
   }
 }
 
@@ -487,7 +487,10 @@ strong {
   overflow: hidden;
   padding-top: 100px;
   height: calc(100vh - 51px);
-  background-color: #000000;
+  background-image: url('../images/header_background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .hero-section small {
