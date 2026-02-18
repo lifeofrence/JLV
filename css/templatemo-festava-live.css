@@ -358,10 +358,10 @@ strong {
 
 @keyframes heroZoom {
   from {
-    transform: translate(-50%, -50%) scale(0.2);
+    transform: translate(-50%, -50%) scale(0.);
   }
   to {
-    transform: translate(-50%, -50%) scale(0.6);
+    transform: translate(-50%, -50%) scale(0.);
   }
 }
 
