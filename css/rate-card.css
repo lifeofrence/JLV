@@ -25,6 +25,15 @@
   color: #ffffff;
   margin-bottom: 50px;
 }
+.rate-card-header .subtitle1 {
+  font-family: var(--body-font-family);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1.7rem;
+  color: #ffffff;
+ 
+}
+
 
 /* Category Cards Container */
 .category-cards-container {
