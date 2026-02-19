@@ -43,50 +43,6 @@ https://templatemo.com/tm-583-jenniferlami-visuals
   --font-weight-bold:             700;
 }
 
-/* Preloader Styles */
-#preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--dark-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
-  transition: opacity 0.5s ease-in-out, visibility 0.5s;
-}
-
-#preloader.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.preloader-logo {
-  max-width: 250px;
-  width: 100%;
-  opacity: 0;
-  transform: translateY(-200px);
-  filter: brightness(0) invert(1); /* Ensure logo is white on black background if it's dark */
-  animation: logoDrop 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes logoDrop {
-  0% {
-    opacity: 0;
-    transform: translateY(-250px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 body {
   background-color: var(--white-color);
   font-family: var(--body-font-family); 
