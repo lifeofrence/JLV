@@ -85,3 +85,12 @@ function togglePricing(category) {
     }, 100);
   }
 }
+
+// Hide Preloader
+function hidePreloader() {
+  const preloader = document.getElementById('preloader');
+  setTimeout(() => {
+    preloader.classList.add('fade-out');
+  }, 1500); // Wait for the drop animation to finish
+}
+
