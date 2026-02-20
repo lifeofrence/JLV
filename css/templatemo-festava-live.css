@@ -347,21 +347,29 @@ strong {
   left: 50%;
   transform: translate(-50%, -50%);
   object-fit: cover;
-  width: 96%;
-  height: 94%;
+  width: 66%;
+  height: 66%;
   border-radius: var(--border-radius-medium);
   filter: brightness(1.1) contrast(1.05);
   box-shadow: 0 15px 35px rgba(0,0,0,0.15);
   z-index: 1;
-  animation: heroZoom 8s ease-in-out infinite alternate;
+  animation: fallToCenter 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  pointer-events: none;
 }
 
-@keyframes heroZoom {
-  from {
-    transform: translate(-50%, -50%) scale(1);
+@media screen and (min-width: 992px) {
+  .custom-video {
+    width: 30%;
+    height: 50%;
   }
-  to {
-    transform: translate(-50%, -50%) scale(1.1);
+}
+
+@keyframes fallToCenter {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 50%;
   }
 }
 
@@ -511,7 +519,7 @@ strong {
 -----------------------------------------*/
 .hero-section {
   position: relative;
-  overflow: hidden;
+  /* Removed overflow: hidden to allow falling animation to traverse the page */
   padding-top: 100px;
   height: calc(100vh - 51px);
   background-image: url('../images/header_background.jpg');
