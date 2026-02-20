@@ -426,6 +426,11 @@ strong {
   font-weight: var(--font-weight-bold);
 }
 
+.navbar-brand .logo {
+  height: 50px; /* Adjusted to fit nav */
+  width: auto;
+}
+
 .navbar-expand-lg .navbar-nav .nav-link {
   border-radius: var(--border-radius-large);
   margin: 10px;
