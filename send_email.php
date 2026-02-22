@@ -48,10 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div style='background-color: #000; color: #fff; padding: 40px; font-family: Arial, sans-serif; text-align: center;'>
         <div style='max-width: 500px; margin: 0 auto; border: 1px solid #ee5007; padding: 40px; border-radius: 20px;'>
             <h2 style='text-transform: uppercase; letter-spacing: 3px; font-size: 16px; margin-bottom: 5px; color: #ee5007;'>Contact Message</h2>
-            <h1 style='font-size: 32px; margin: 10px 0; font-family: Times, serif;'>$name</h1>
-            <p style='text-transform: uppercase; color: #aaa; font-size: 12px; letter-spacing: 2px; margin-bottom: 30px;'>Inquiry from JLV Website</p>
+            <p style='text-transform: uppercase; color: #aaa; font-size: 12px; letter-spacing: 2px; margin-bottom: 30px;'>Inquiry from jenniferlamivisuals Website</p>
             
             <div style='text-align: left; background: #111; padding: 20px; border-radius: 10px;'>
+                <p><strong>Name:</strong> $name</p>
                 <p><strong>Email:</strong> $email</p>
                 <p><strong>Phone:</strong> $phone</p>
                 <div style='margin-top: 20px; padding-top: 10px; border-top: 1px solid #222;'>
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>";
 
         // Email headers
-        $mail->setFrom('info@jenniferlamivisuals.com', 'JLV Website'); // Using verified sender
+        $mail->setFrom('info@jenniferlamivisuals.com', 'jenniferlamivisuals Website'); // Using verified sender
         $mail->addReplyTo($email, $name);
         $mail->addAddress($to1);
         $mail->Subject = $subject;

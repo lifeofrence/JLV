@@ -84,17 +84,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $adminEmailContent = "
     <div style='background-color: #000; color: #fff; padding: 40px; font-family: Arial, sans-serif; text-align: center;'>
         <div style='max-width: 500px; margin: 0 auto; border: 1px solid #ee5007; padding: 40px; border-radius: 20px;'>
+            <img src='https://jenniferlamivisuals.com/images/logo.png' alt='JLV Logo' style='width: 80px; margin-bottom: 20px;'>
             <h2 style='text-transform: uppercase; letter-spacing: 3px; font-size: 16px; margin-bottom: 5px; color: #ee5007;'>New Booking</h2>
-            <h1 style='font-size: 32px; margin: 10px 0; font-family: Times, serif;'>$name</h1>
-            <p style='text-transform: uppercase; color: #aaa; font-size: 12px; letter-spacing: 2px; margin-bottom: 30px;'>New Request via Website</p>
+            <h1 style='font-size: 36px; margin: 10px 0; font-family: Times, serif;'>$name</h1>
+            <p style='color: #aaa; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;'>New Request via jenniferlamivisuals Website</p>
             
-            <div style='text-align: left; background: #111; padding: 20px; border-radius: 10px;'>
-                <p><strong>Email:</strong> $email</p>
-                <p><strong>Phone:</strong> $phone</p>
-                <p><strong>Package:</strong> $package</p>
-                <p><strong>Date:</strong> $date</p>
-                <p><strong>Message:</strong><br><span style='color: #aaa;'>$message</span></p>
+            <div style='text-align: left; background: #111; padding: 20px; border-radius: 10px; margin-bottom: 30px;'>
+                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Name:</strong> <span style='color: #ee5007; float: right;'>$name</span></div>
+                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Email:</strong> <span style='color: #ee5007; float: right;'>$email</span></div>
+                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Phone:</strong> <span style='color: #ee5007; float: right;'>$phone</span></div>
+                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Package:</strong> <span style='color: #ee5007; float: right;'>$package</span></div>
+                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Date:</strong> <span style='color: #ee5007; float: right;'>$date</span></div>
+                <div style='padding: 10px 0; margin-top: 10px;'>
+                    <strong>Message:</strong><br>
+                    <span style='color: #aaa; font-size: 14px; display: block; margin-top: 5px;'>$message</span>
+                </div>
             </div>
+            
+            <p style='margin-top: 30px; font-size: 12px; color: #555;'>JenniferLami Visuals &copy; 2026</p>
         </div>
     </div>";
 
