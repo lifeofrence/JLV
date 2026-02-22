@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $clientEmailContent = "
     <div style='background-color: #000; color: #fff; padding: 40px; font-family: Arial, sans-serif; text-align: center;'>
-        <div style='max-width: 500px; margin: 0 auto; border: 1px solid #333; padding: 40px; border-radius: 20px;'>
-            <img src='https://jenniferlamivisuals.com/images/logo.png' alt='JLV Logo' style='width: 80px; margin-bottom: 20px;'>
+        <div style='max-width: 500px; margin: 0 auto; border: 1px solid #333; padding: 20px; border-radius: 20px;'>
+            <img src='https://jenniferlamivisuals.com/images/logo.png' alt='JLV Logo' style='width: 80px; margin-bottom: 10px;'>
             <h2 style='text-transform: uppercase; letter-spacing: 3px; font-size: 16px; margin-bottom: 5px; color: #ee5007;'>Booking Received</h2>
             <h1 style='font-size: 36px; margin: 10px 0; font-family: Times, serif;'>Thank You</h1>
             <p style='color: #aaa; font-size: 14px; line-height: 1.6; margin-bottom: 30px;'>Dear $name, we have received your request and will get back to you shortly to confirm your session.</p>
