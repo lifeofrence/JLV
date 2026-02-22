@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error - JenniferLamiVisuals</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/templatemo-festava-live.css" rel="stylesheet">
+    <style>
+        body { background: #000; color: #fff; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+        .container { max-width: 600px; padding: 40px; background: rgba(255,255,255,0.05); border-radius: 20px; }
+        .error-icon { font-size: 80px; color: #dc3545; }
+        h1 { margin: 20px 0; font-family: 'Outfit', sans-serif; }
+        .btn { background: #ee5007; color: #fff; border: none; padding: 10px 30px; border-radius: 100px; }
+        .btn:hover { background: #fff; color: #ee5007; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-icon"><i class="bi-exclamation-triangle-fill"></i></div>
+        <h1>Oops!</h1>
+        <p id="message">Something went wrong. Please try again later.</p>
+        <a href="index.html" class="btn mt-4">Back to Home</a>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const msg = urlParams.get('message');
+        if (msg) {
+            document.getElementById('message').textContent = msg;
+        }
+    </script>
+</body>
+</html>
