@@ -70,16 +70,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Send email
         $mail->send();
 
+        // Check if it's an AJAX request
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            echo json_encode(['status' => 'success', 'message' => 'Your message has been sent successfully.']);
+            exit;
+        }
+
         // Redirect back with success message
         header("Location: success.html?message=Email sent successfully.");
         exit;
     } catch (Exception $e) {
+        // Check if it's an AJAX request
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            echo json_encode(['status' => 'error', 'message' => 'Error sending email: ' . $mail->ErrorInfo]);
+            exit;
+        }
         // Redirect back with error message
         header("Location: error.html?message=Error sending email: " . $mail->ErrorInfo);
         exit;
     }
 } else {
     // If form not submitted, redirect back to form
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        echo json_encode(['status' => 'error', 'message' => 'Method not allowed.']);
+        exit;
+    }
     header("Location: error.html?message=Method not allowed.");
     exit;
 }

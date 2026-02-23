@@ -645,7 +645,8 @@
                         <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"
                                 aria-labelledby="nav-ContactForm-tab">
-                                <form class="custom-form contact-form mb-5 mb-lg-0" action="send_email.php" method="post"
+                                <div id="contact-message-status" class="mb-4 text-center" style="display: none; padding: 15px; border-radius: 5px;"></div>
+                                <form id="contact-form" class="custom-form contact-form mb-5 mb-lg-0" action="send_email.php" method="post"
                                     role="form">
                                     <div class="contact-form-body">
                                         <div class="row">
@@ -761,6 +762,59 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/click-scroll.js"></script>
     <script src="js/custom.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#contact-form').on('submit', function(e) {
+                e.preventDefault();
+                
+                var form = $(this);
+                var statusDiv = $('#contact-message-status');
+                var submitBtn = form.find('button[type="submit"]');
+                var originalBtnText = submitBtn.text();
+                
+                // Show loading state
+                submitBtn.prop('disabled', true).text('Sending...');
+                statusDiv.hide().removeClass('alert-success alert-danger').css('display', 'none');
+
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        statusDiv.text(response.message)
+                            .css({
+                                'display': 'block',
+                                'background-color': response.status === 'success' ? '#d4edda' : '#f8d7da',
+                                'color': response.status === 'success' ? '#155724' : '#721c24',
+                                'border': response.status === 'success' ? '1px solid #c3e6cb' : '1px solid #f5c6cb'
+                            })
+                            .fadeIn();
+                        
+                        if (response.status === 'success') {
+                            form[0].reset();
+                        }
+                    },
+                    error: function() {
+                        statusDiv.text('An error occurred. Please try again later.')
+                            .css({
+                                'display': 'block',
+                                'background-color': '#f8d7da',
+                                'color': '#721c24',
+                                'border': '1px solid #f5c6cb'
+                            })
+                            .fadeIn();
+                    },
+                    complete: function() {
+                        submitBtn.prop('disabled', false).text(originalBtnText);
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 
