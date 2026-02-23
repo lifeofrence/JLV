@@ -2,6 +2,7 @@
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'PHPMailer/src/Exception.php';
+require 'config_smtp.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -29,13 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // SMTP Configuration
     $mail = new PHPMailer(true);
     try {
-        $mail->isSMTP();
-        $mail->Host = 'mail.jenniferlamivisuals.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'info@jenniferlamivisuals.com';
-        $mail->Password = 'C$^YqL!+oclO0tJE';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
+        setupSMTP($mail);
+        $mail->setFrom('info@jenniferlamivisuals.com', 'jenniferlamivisuals Website'); // Override default name
 
         // Set the recipient email address
         $to1 = "info@jenniferlamivisuals.com"; // Replace with your email
@@ -65,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>";
 
         // Email headers
-        $mail->setFrom('info@jenniferlamivisuals.com', 'jenniferlamivisuals Website'); // Using verified sender
         $mail->addReplyTo($email, $name);
         $mail->addAddress($to1);
         $mail->Subject = $subject;

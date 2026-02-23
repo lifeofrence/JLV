@@ -3,10 +3,11 @@ session_start();
 ob_start();
 error_reporting(E_ALL);
 
-// Include PHPMailer
+// Include PHPMailer and Config
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'PHPMailer/src/Exception.php';
+require 'config_smtp.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -27,13 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Email to Client
         $mailClient = new PHPMailer(true);
         try {
-            $mailClient->isSMTP();
-            $mailClient->Host = 'mail.jenniferlamivisuals.com';
-            $mailClient->SMTPAuth = true;
-            $mailClient->Username = 'info@jenniferlamivisuals.com';
-            $mailClient->Password = 'C$^YqL!+oclO0tJE';
-            $mailClient->SMTPSecure = 'ssl';
-            $mailClient->Port = 465;
+            setupSMTP($mailClient);
 
             $mailClient->setFrom('info@jenniferlamivisuals.com', 'JenniferLami Visuals');
             $mailClient->addAddress($email, $name);
@@ -67,15 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Email to Admin
         $mailAdmin = new PHPMailer(true);
         try {
-            $mailAdmin->isSMTP();
-            $mailAdmin->Host = 'mail.jenniferlamivisuals.com';
-            $mailAdmin->SMTPAuth = true;
-            $mailAdmin->Username = 'info@jenniferlamivisuals.com';
-            $mailAdmin->Password = 'C$^YqL!+oclO0tJE';
-            $mailAdmin->SMTPSecure = 'ssl';
-            $mailAdmin->Port = 465;
-
-            $mailAdmin->setFrom('info@jenniferlamivisuals.com', 'JLV Website');
+            setupSMTP($mailAdmin);
+            $mailAdmin->setFrom('info@jenniferlamivisuals.com', 'JLV Website'); // Override default name
             $mailAdmin->addAddress('info@jenniferlamivisuals.com', 'JenniferLami Admin');
             $mailAdmin->addReplyTo($email, $name);
             $mailAdmin->Subject = 'New Booking Alert: ' . $package;
