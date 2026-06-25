@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /ig_page.html
+Disallow: /PHPMailer/
+Disallow: /process_booking.php
+Disallow: /send_email.php
+
+Sitemap: https://jenniferlamivisuals.com/sitemap.xml

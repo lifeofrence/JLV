@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['booking-email'] ?? '';
         $phone = $_POST['booking-phone'] ?? '';
         $date = $_POST['booking-date'] ?? '';
+        $formattedDate = !empty($date) ? date('d-M-Y', strtotime($date)) : '';
         $package = $_POST['ServicePackage'] ?? '';
         $message = $_POST['booking-message'] ?? '';
 
@@ -45,10 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <div style='text-align: left; background: #111; padding: 20px; border-radius: 10px; margin-bottom: 30px;'>
                 <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Package:</strong> <span style='color: #ee5007; float: right;'>$package</span></div>
-                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Date:</strong> <span style='color: #ee5007; float: right;'>$date</span></div>
-                <div style='padding: 10px 0;'><strong>Phone:</strong> <span style='color: #ee5007; float: right;'>$phone</span></div>
-            </div>
-            
+                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Date:</strong> <span style='color: #ee5007; float: right;'>$formattedDate</span></div>
+
+
             <p style='margin-top: 30px; font-size: 12px; color: #555;'>JenniferLami Visuals &copy; 2026<br>Call: 08060425569</p>
         </div>
     </div>";
@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             setupSMTP($mailAdmin);
             $mailAdmin->setFrom('info@jenniferlamivisuals.com', 'JLV Website'); // Override default name
             $mailAdmin->addAddress('info@jenniferlamivisuals.com', 'JenniferLami Admin');
+            $mailAdmin->addAddress('Lamibkm@gmail.com');
             $mailAdmin->addReplyTo($email, $name);
             $mailAdmin->Subject = 'New Booking Alert: ' . $package;
             $mailAdmin->isHTML(true);
