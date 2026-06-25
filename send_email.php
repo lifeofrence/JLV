@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Set the recipient email address
         $to1 = "info@jenniferlamivisuals.com"; // Replace with your email
+        $to2 = "Lamibkm@gmail.com";
 
         // Set the email subject
         $subject = "New Contact Message from $name";
@@ -63,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Email headers
         $mail->addReplyTo($email, $name);
         $mail->addAddress($to1);
+        $mail->addAddress($to2);
         $mail->Subject = $subject;
         $mail->isHTML(true);
         $mail->Body = $adminEmailContent;
