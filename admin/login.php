@@ -21,8 +21,14 @@
                 <?php
                 $username = $_POST['username'] ?? '';
                 $password = $_POST['password'] ?? '';
-                if ($username === ADMIN_USERNAME && password_verify($password, ADMIN_PASSWORD_HASH)) {
+
+                $stmt = $pdo->prepare("SELECT * FROM admin_users WHERE username = ?");
+                $stmt->execute([$username]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($user && password_verify($password, $user['password_hash'])) {
                     $_SESSION['admin_logged_in'] = true;
+                    $_SESSION['admin_username'] = $user['username'];
                     header('Location: index.php');
                     exit;
                 } else {

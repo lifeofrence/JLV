@@ -47,7 +47,7 @@ $totalPages = ceil($total / $perPage);
         <div class="container-fluid">
             <span class="navbar-brand"><img src="../images/logo.png" alt="JLV" style="height: 30px;"> Admin Panel</span>
             <div class="d-flex">
-                <span class="text-light me-3 my-auto"><i class="bi-person-circle"></i> <?= htmlspecialchars(ADMIN_USERNAME) ?></span>
+                <span class="text-light me-3 my-auto"><i class="bi-person-circle"></i> <?= htmlspecialchars($_SESSION['admin_username'] ?? 'Admin') ?></span>
                 <a href="logout.php" class="btn btn-outline-light btn-sm my-auto">Logout</a>
             </div>
         </div>
