@@ -51,3 +51,9 @@ function isActive($paths) {
     }
     return '';
 }
+
+function assetUrl($path) {
+    $depth = substr_count(dirname($_SERVER['SCRIPT_NAME']), '/');
+    $prefix = $depth ? str_repeat('../', $depth) : './';
+    return $prefix . ltrim($path, '/');
+}

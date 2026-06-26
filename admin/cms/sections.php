@@ -81,7 +81,7 @@ foreach ($sections as $s) {
                                 <input type="file" class="form-control" name="sections_img[<?= $section['section_key'] ?>]" accept="image/*">
                             </div>
                             <?php if ($section['image_url']): ?>
-                                <img src="/<?= ltrim($section['image_url'], '/') ?>" class="section-thumb" alt="Preview">
+                                <img src="<?= assetUrl($section['image_url']) ?>" class="section-thumb" alt="Preview">
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>

@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="col-md-5">
         <div class="booking-detail-card">
             <div class="detail-header">
-                <img src="/images/logo.png" alt="JLV">
+                <img src="<?= assetUrl('images/logo.png') ?>" alt="JLV">
                 <h5><?= $table === 'bookings' ? 'Booking Details' : 'Contact Message' ?></h5>
             </div>
             <div class="detail-body">
