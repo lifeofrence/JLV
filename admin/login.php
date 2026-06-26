@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Login - JenniferLamiVisuals</title>
     <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="/images/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="style.css" rel="stylesheet">
@@ -14,8 +15,9 @@
     <div class="admin-login-container">
         <div class="admin-login-card">
             <div class="text-center mb-4">
-                <img src="../images/logo.png" alt="JLV Logo" style="width: 80px;">
-                <h3 class="mt-3">Admin Login</h3>
+                <img src="/images/logo.png" alt="JLV Logo" class="login-logo">
+                <h3>Admin Login</h3>
+                <p class="login-sub">JenniferLamiVisuals Management</p>
             </div>
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
                 <?php
