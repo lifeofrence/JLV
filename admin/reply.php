@@ -50,12 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div style='max-width: 500px; margin: 0 auto; border: 1px solid #ee5007; padding: 40px; border-radius: 20px;'>
                     <img src='https://jenniferlamivisuals.com/images/logo.png' alt='JLV Logo' style='width: 80px; margin-bottom: 20px;'>
                     <h2 style='text-transform: uppercase; letter-spacing: 3px; font-size: 16px; margin-bottom: 5px; color: #ee5007;'>JenniferLami Visuals</h2>
-                    <h1 style='font-size: 28px; margin: 10px 0; font-family: Times, serif; color: #fff;'>Hi " . htmlspecialchars($entry['name']) . ",</h1>
-                    <div style='text-align: left; background: #111; padding: 20px; border-radius: 10px; margin: 20px 0; line-height: 1.8; color: #eee;'>
+                    <h1 style='font-size: 36px; margin: 10px 0; font-family: Times, serif;'>" . htmlspecialchars($entry['name']) . "</h1>
+                    <p style='color: #aaa; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;'>Reply from jenniferlamivisuals</p>
+                    <div style='text-align: left; background: #111; padding: 20px; border-radius: 10px; margin-bottom: 30px; line-height: 1.8; color: #eee;'>
                         " . nl2br(htmlspecialchars($replyBody)) . "
                     </div>
                     <hr style='border-color: #333; margin: 30px 0;'>
-                    <p style='font-size: 12px; color: #555;'>JenniferLami Visuals<br>info@jenniferlamivisuals.com</p>
+                    <p style='font-size: 12px; color: #555;'>JenniferLami Visuals &copy; 2026<br>info@jenniferlamivisuals.com</p>
                 </div>
             </div>";
 
