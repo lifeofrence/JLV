@@ -140,6 +140,7 @@ select.form-select { cursor: pointer; }
 .text-center { text-align: center; }
 .text-light { color: #ccc; }
 .text-secondary { color: var(--text-muted); }
+.w-100 { width: 100%; }
 .text-white { color: #fff; }
 .border-bottom { border-bottom: 1px solid var(--border); }
 .border-secondary { border-color: var(--border) !important; }
@@ -192,16 +193,51 @@ select.form-select { cursor: pointer; }
     .admin-sidebar { transform: translateX(-100%); }
     .admin-sidebar.show { transform: translateX(0); box-shadow: 0 0 40px rgba(0,0,0,.5); }
     .admin-main { margin-left: 0; }
-    .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+    .sidebar-toggle { display: flex; align-items: center; justify-content: center; min-width: 36px; min-height: 36px; }
     .admin-topbar { padding: 10px 16px; }
     .admin-content { padding: 16px; }
     .col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-12 { flex: 0 0 100%; max-width: 100%; }
+    .topbar-title { font-size: 14px; }
+    .topbar-user { font-size: 12px; }
+    .topbar-user i { display: none; }
+    .table th, .table td { padding: 8px 6px; font-size: 12px; white-space: nowrap; }
+    .card-body { padding: 12px; }
+    .card-header { padding: 10px 12px; font-size: 13px; }
+    .booking-detail-card .detail-body { padding: 12px; }
+    .form-control, .form-select { font-size: 16px; padding: 10px 12px; }
+    .pagination { gap: 2px; }
+    .page-item .page-link { padding: 8px 10px; font-size: 12px; }
 }
 @media (max-width: 575.98px) {
-    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .admin-content { padding: 12px; }
+    .stats-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
     .stat-card { padding: 12px; }
+    .stat-icon { width: 36px; height: 36px; font-size: 16px; }
     .stat-info .stat-number { font-size: 18px; }
-    .tab-buttons { flex-direction: column; }
+    .stat-info .stat-label { font-size: 10px; }
+    .tab-buttons { flex-direction: column; gap: 6px; }
+    .tab-btn { text-align: center; padding: 10px 14px; font-size: 14px; }
+    .btn-admin { padding: 10px 20px; font-size: 14px; }
+    .btn-secondary { padding: 10px 20px; font-size: 14px; }
+    .row { gap: 8px; }
+    .alert { padding: 10px 12px; font-size: 13px; }
+    .booking-detail-card .detail-header { padding: 12px; }
+    .booking-detail-card .detail-header h5 { font-size: 10px; }
+    .booking-detail-card .detail-row .label,
+    .booking-detail-card .detail-row .value { font-size: 11px; }
+    .booking-detail-card .detail-message p { font-size: 12px; }
+    .badge { font-size: 10px; padding: 3px 8px; }
+    .inbox-view-content { padding: 12px !important; }
+    .inbox-email-header h3 { font-size: 15px; }
+    .inbox-email-header .meta span { display: block; margin-right: 0; margin-bottom: 4px; }
+    .inbox-email-body iframe { height: 400px !important; }
+}
+@media (max-width: 400px) {
+    .admin-content { padding: 8px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-card { padding: 10px; gap: 10px; }
+    .sidebar-toggle { min-width: 40px; min-height: 40px; }
+    .table th, .table td { padding: 6px 4px; font-size: 11px; }
 }
     </style>
 </head>

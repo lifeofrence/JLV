@@ -82,8 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="alert alert-danger"><i class="bi-exclamation-triangle-fill"></i> <?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<div class="row g-4" style="gap:0;">
-    <div class="col-md-5">
+<div class="row g-3" style="gap:0;">
+    <div class="col-12 col-md-6">
         <div class="booking-detail-card">
             <div class="detail-header">
                 <img src="<?= assetUrl('images/logo.png') ?>" alt="JLV">
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <div class="col-md-7">
+    <div class="col-12 col-md-6">
         <div class="card">
             <div class="card-header">
                 <i class="bi-send-fill"></i> Send Reply to <?= htmlspecialchars($entry['email']) ?>
@@ -139,10 +139,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Message</label>
-                        <textarea name="reply_body" rows="12" class="form-control" placeholder="Type your reply here..." required></textarea>
+                        <textarea name="reply_body" rows="8" class="form-control" placeholder="Type your reply here..." required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-admin"><i class="bi-send-fill"></i> Send Reply</button>
-                    <a href="index.php?tab=<?= $table ?>" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-admin w-100"><i class="bi-send-fill"></i> Send Reply</button>
+                    <a href="index.php?tab=<?= $table ?>" class="btn btn-secondary w-100 mt-2">Cancel</a>
                 </form>
             </div>
         </div>

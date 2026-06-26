@@ -148,11 +148,16 @@ if ($configOk && $imapAvailable && isset($_GET['view'])) {
 .inbox-empty i { font-size: 48px; margin-bottom: 12px; display: block; }
 .inbox-setup { max-width: 500px; margin: 60px auto; text-align: center; }
 @media (max-width: 991.98px) {
-    .inbox-layout { flex-direction: column; margin: -16px; }
+    .inbox-layout { flex-direction: column; margin: -16px; min-height: auto; }
     .inbox-list { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
     .inbox-list-header { padding: 12px 16px; }
-    .inbox-emails { height: auto; max-height: 300px; }
-    .inbox-view { height: auto; }
+    .inbox-list-header h5 { font-size: 13px; }
+    .inbox-emails { height: auto; max-height: 260px; }
+    .inbox-view { height: auto; overflow: visible; }
+    .inbox-view-content { padding: 16px; }
+    .inbox-email-body iframe { height: 400px; }
+    .inbox-empty { padding: 24px; }
+    .inbox-empty i { font-size: 36px; }
 }
 </style>
 
