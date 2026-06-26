@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="alert alert-danger"><i class="bi-exclamation-triangle-fill"></i> <?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<div class="row g-4">
+<div class="row g-4" style="gap:0;">
     <div class="col-md-5">
         <div class="booking-detail-card">
             <div class="detail-header">
