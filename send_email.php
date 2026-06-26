@@ -10,6 +10,29 @@ use PHPMailer\PHPMailer\Exception;
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Anti-bot check: honeypot field must be empty
+    if (!empty($_POST['website'])) {
+        // Silently reject - bot filled the hidden field
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            echo json_encode(['status' => 'success', 'message' => 'Your message has been sent successfully.']);
+            exit;
+        }
+        header("Location: success.html?message=Email sent successfully.");
+        exit;
+    }
+
+    // Anti-bot check: form must not be submitted too quickly (minimum 3 seconds)
+    $formLoaded = $_POST['form_loaded'] ?? 0;
+    if ($formLoaded > 0 && (microtime(true) * 1000 - $formLoaded) < 3000) {
+        // Submitted too fast - likely a bot
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            echo json_encode(['status' => 'success', 'message' => 'Your message has been sent successfully.']);
+            exit;
+        }
+        header("Location: success.html?message=Email sent successfully.");
+        exit;
+    }
+
     // Validate form inputs
     $name = trim($_POST['contact-name'] ?? '');
     $email = filter_var($_POST['contact-email'] ?? '', FILTER_SANITIZE_EMAIL);

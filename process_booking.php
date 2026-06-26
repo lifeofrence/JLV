@@ -15,6 +15,21 @@ use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
+        // Anti-bot check: honeypot field must be empty
+        if (!empty($_POST['website'])) {
+            // Silently reject - bot filled the hidden field
+            header("Location: success.html?message=Booking request sent successfully.");
+            exit;
+        }
+
+        // Anti-bot check: form must not be submitted too quickly (minimum 3 seconds)
+        $formLoaded = $_POST['form_loaded'] ?? 0;
+        if ($formLoaded > 0 && (microtime(true) * 1000 - $formLoaded) < 3000) {
+            // Submitted too fast - likely a bot
+            header("Location: success.html?message=Booking request sent successfully.");
+            exit;
+        }
+
         $name = $_POST['booking-name'] ?? '';
         $email = $_POST['booking-email'] ?? '';
         $phone = $_POST['booking-phone'] ?? '';

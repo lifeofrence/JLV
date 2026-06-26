@@ -345,6 +345,11 @@ $categories = [
                                     </div>
                                     <input type="tel" name="contact-phone" id="contact-phone" class="form-control" placeholder="Phone Number" required>
                                     <textarea name="contact-message" rows="3" class="form-control" id="contact-message" placeholder="Message"></textarea>
+                                    <!-- Honeypot field - invisible to humans, traps bots -->
+                                    <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                                        <input type="text" name="website" id="contact-website" tabindex="-1" autocomplete="off">
+                                    </div>
+                                    <input type="hidden" name="form_loaded" value="">
                                     <div class="col-lg-4 col-md-10 col-8 mx-auto">
                                         <button type="submit" class="form-control">Send message</button>
                                     </div>
@@ -409,6 +414,9 @@ $categories = [
 <script src="js/custom.js"></script>
 <script>
 $(document).ready(function() {
+    // Set form load timestamp for bot detection
+    $('input[name="form_loaded"]').val(Date.now());
+
     $('#contact-form').on('submit', function(e) {
         e.preventDefault();
         var form = $(this);
