@@ -200,7 +200,7 @@ select.form-select { cursor: pointer; }
     .topbar-user { font-size: 12px; }
     .topbar-user i { display: none; }
     .table th, .table td { padding: 8px 6px; font-size: 12px; white-space: nowrap; }
-    .table-responsive table { min-width: 800px; }
+    .table-responsive table { min-width: 900px; }
     .card-body { padding: 12px; }
     .card-header { padding: 10px 12px; font-size: 13px; }
     .booking-detail-card .detail-body { padding: 12px; }

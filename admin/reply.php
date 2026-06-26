@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 
 <div class="row g-3" style="gap:0;">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 order-md-last">
         <div class="booking-detail-card">
             <div class="detail-header">
                 <img src="<?= assetUrl('images/logo.png') ?>" alt="JLV">
@@ -112,10 +112,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <span class="value"><?= $entry['event_date'] ? date('d-M-Y', strtotime($entry['event_date'])) : '-' ?></span>
                     </div>
                 <?php endif; ?>
-                <div class="detail-row">
-                    <span class="label">Submitted</span>
-                    <span class="value"><?= date('d-M-Y g:i A', strtotime($entry['created_at'])) ?></span>
-                </div>
                 <div class="detail-message">
                     <strong>MESSAGE</strong>
                     <p><?= htmlspecialchars($entry['message'] ?: 'No message') ?></p>
@@ -124,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 order-md-first">
         <div class="card">
             <div class="card-header">
                 <i class="bi-send-fill"></i> Send Reply to <?= htmlspecialchars($entry['email']) ?>
