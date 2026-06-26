@@ -2,6 +2,14 @@
 require_once 'config.php';
 requireAuth();
 
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
+require '../PHPMailer/src/Exception.php';
+require '../config_smtp.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 $table = $_GET['table'] ?? 'bookings';
 $id = (int)($_GET['id'] ?? 0);
 $allowedTables = ['bookings', 'contacts'];
@@ -28,14 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($replySubject) || empty($replyBody)) {
         $error = 'Please fill in both subject and message.';
     } else {
-        require '../PHPMailer/src/PHPMailer.php';
-        require '../PHPMailer/src/SMTP.php';
-        require '../PHPMailer/src/Exception.php';
-        require '../config_smtp.php';
-
-        use PHPMailer\PHPMailer\PHPMailer;
-        use PHPMailer\PHPMailer\Exception;
-
         try {
             $mail = new PHPMailer(true);
             setupSMTP($mail);
@@ -59,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Body = $htmlBody;
             $mail->send();
 
-            // Update status
             $upd = $pdo->prepare("UPDATE $table SET status = 'replied' WHERE id = ?");
             $upd->execute([$id]);
 
