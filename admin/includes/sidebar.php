@@ -24,7 +24,7 @@ $script = $_SERVER['SCRIPT_NAME'];
     --border: #2a2a2a; --text: #eee; --text-muted: #888; --sidebar-width: 250px;
 }
 * { box-sizing: border-box; }
-body { margin: 0; padding: 0; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background: var(--dark); color: var(--text); }
+html, body { margin: 0; padding: 0; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; width: 100%; }
 
 /* Sidebar */
 .admin-wrapper { display: flex; min-height: 100vh; }
@@ -85,7 +85,7 @@ body { margin: 0; padding: 0; font-family: -apple-system,BlinkMacSystemFont,'Seg
 .table th { color: var(--orange); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--border); padding: 12px 8px; text-align: left; white-space: nowrap; }
 .table td { border-bottom: 1px solid var(--border); padding: 10px 8px; vertical-align: middle; }
 .table tr:hover td { background: var(--dark-4); }
-.table-responsive { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); background: var(--dark-3); }
+.table-responsive { overflow-x: auto; max-width: 100%; border-radius: 12px; border: 1px solid var(--border); background: var(--dark-3); }
 .status-new td { border-left: 3px solid #ffc107; }
 .status-replied td { border-left: 3px solid #0dcaf0; }
 .status-completed td { border-left: 3px solid #198754; }
@@ -199,8 +199,10 @@ select.form-select { cursor: pointer; }
     .topbar-title { font-size: 14px; }
     .topbar-user { font-size: 12px; }
     .topbar-user i { display: none; }
+    .table { width: 100%; }
     .table th, .table td { padding: 8px 6px; font-size: 12px; white-space: nowrap; }
-    .table-responsive table { min-width: 900px; }
+    .table-responsive { overflow-x: scroll !important; -webkit-overflow-scrolling: touch; }
+    .table-responsive table { width: 900px; }
     .card-body { padding: 12px; }
     .card-header { padding: 10px 12px; font-size: 13px; }
     .booking-detail-card .detail-body { padding: 12px; }
@@ -256,6 +258,12 @@ select.form-select { cursor: pointer; }
             <div class="sidebar-label">Management</div>
             <a href="<?= assetUrl('admin/index.php') ?>" class="sidebar-link <?= isActive('/admin/index.php') ?>">
                 <i class="bi-speedometer2"></i> Dashboard
+            </a>
+            <a href="<?= assetUrl('admin/bookings.php') ?>" class="sidebar-link <?= isActive('/admin/bookings.php') ?>">
+                <i class="bi-calendar-check-fill"></i> Bookings
+            </a>
+            <a href="<?= assetUrl('admin/messages.php') ?>" class="sidebar-link <?= isActive('/admin/messages.php') ?>">
+                <i class="bi-chat-dots-fill"></i> Messages
             </a>
 
             <div class="sidebar-label">Content</div>

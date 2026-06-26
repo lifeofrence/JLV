@@ -2,37 +2,43 @@
 $pageTitle = 'Dashboard';
 require_once __DIR__ . '/includes/sidebar.php';
 
-$activeTab = $_GET['tab'] ?? 'bookings';
-
-$page = max(1, (int)($_GET['page'] ?? 1));
-$perPage = 20;
-$offset = ($page - 1) * $perPage;
-
 $bookingsTotal = $pdo->query("SELECT COUNT(*) FROM bookings")->fetchColumn();
 $contactsTotal = $pdo->query("SELECT COUNT(*) FROM contacts")->fetchColumn();
 $newBookings = $pdo->query("SELECT COUNT(*) FROM bookings WHERE status='new'")->fetchColumn();
 $newContacts = $pdo->query("SELECT COUNT(*) FROM contacts WHERE status='new'")->fetchColumn();
-
-if ($activeTab === 'bookings') {
-    $total = $bookingsTotal;
-    $stmt = $pdo->prepare("SELECT * FROM bookings ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
-    $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->execute();
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $table = 'bookings';
-} else {
-    $total = $contactsTotal;
-    $stmt = $pdo->prepare("SELECT * FROM contacts ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
-    $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->execute();
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $table = 'contacts';
-}
-
-$totalPages = ceil($total / $perPage);
+$recentBookings = $pdo->query("SELECT id, name, package, status, created_at FROM bookings ORDER BY created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+$recentMessages = $pdo->query("SELECT id, name, status, created_at FROM contacts ORDER BY created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<style>
+.action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.action-card { background: var(--dark-3); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 14px; transition: all .15s; }
+.action-card:hover { background: var(--dark-4); border-color: var(--orange); color: var(--text); transform: translateY(-2px); }
+.action-card .ac-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.action-card .ac-text { flex: 1; }
+.action-card .ac-text .ac-title { font-weight: 600; font-size: 14px; }
+.action-card .ac-text .ac-sub { font-size: 11px; color: var(--text-muted); }
+.action-card .ac-arrow { color: var(--text-muted); font-size: 14px; }
+.action-card:hover .ac-arrow { color: var(--orange); }
+
+.recent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.recent-card { background: var(--dark-3); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.recent-card .rc-header { padding: 12px 16px; font-size: 13px; font-weight: 600; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.recent-card .rc-header a { font-size: 11px; font-weight: 400; }
+.recent-card .rc-body { padding: 4px 0; }
+.recent-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--dark-4); }
+.recent-item:last-child { border-bottom: none; }
+.recent-item .ri-left .ri-name { font-size: 13px; font-weight: 500; }
+.recent-item .ri-left .ri-meta { font-size: 11px; color: var(--text-muted); }
+.recent-item .ri-right { display: flex; align-items: center; gap: 8px; }
+@media (max-width: 767.98px) {
+    .recent-grid { grid-template-columns: 1fr; }
+    .action-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 400px) {
+    .action-grid { grid-template-columns: 1fr; }
+}
+</style>
+
 <div class="stats-grid">
     <div class="stat-card">
         <div class="stat-icon orange"><i class="bi-calendar-check-fill"></i></div>
@@ -64,89 +70,90 @@ $totalPages = ceil($total / $perPage);
     </div>
 </div>
 
-<div class="tab-buttons">
-    <a href="?tab=bookings" class="tab-btn <?= $activeTab === 'bookings' ? 'active' : '' ?>">
-        <i class="bi-calendar-check"></i> Bookings
+<div class="action-grid">
+    <a href="bookings.php" class="action-card">
+        <div class="ac-icon orange"><i class="bi-calendar-check-fill"></i></div>
+        <div class="ac-text">
+            <div class="ac-title">View Bookings</div>
+            <div class="ac-sub"><?= $newBookings ?> new, <?= $bookingsTotal ?> total</div>
+        </div>
+        <i class="bi-chevron-right ac-arrow"></i>
     </a>
-    <a href="?tab=contacts" class="tab-btn <?= $activeTab === 'contacts' ? 'active' : '' ?>">
-        <i class="bi-chat-dots"></i> Contact Messages
+    <a href="messages.php" class="action-card">
+        <div class="ac-icon blue"><i class="bi-chat-dots-fill"></i></div>
+        <div class="ac-text">
+            <div class="ac-title">View Messages</div>
+            <div class="ac-sub"><?= $newContacts ?> new, <?= $contactsTotal ?> total</div>
+        </div>
+        <i class="bi-chevron-right ac-arrow"></i>
+    </a>
+    <a href="inbox.php" class="action-card">
+        <div class="ac-icon green"><i class="bi-envelope-fill"></i></div>
+        <div class="ac-text">
+            <div class="ac-title">Email Inbox</div>
+            <div class="ac-sub">View emails from your mailbox</div>
+        </div>
+        <i class="bi-chevron-right ac-arrow"></i>
+    </a>
+    <a href="cms/settings.php" class="action-card">
+        <div class="ac-icon" style="background:rgba(255,193,7,.15);color:#ffc107;"><i class="bi-gear-wide-connected"></i></div>
+        <div class="ac-text">
+            <div class="ac-title">Site Settings</div>
+            <div class="ac-sub">SEO, IMAP, general config</div>
+        </div>
+        <i class="bi-chevron-right ac-arrow"></i>
     </a>
 </div>
 
-<?php if (empty($rows)): ?>
-    <div class="alert alert-info"><i class="bi-info-circle"></i> No entries found.</div>
-<?php else: ?>
-    <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <?php if ($table === 'bookings'): ?>
-                        <th>Package</th>
-                        <th>Event Date</th>
-                    <?php endif; ?>
-                    <th>Message</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($rows as $row): ?>
-                    <tr class="status-<?= $row['status'] ?>">
-                        <td><?= $row['id'] ?></td>
-                        <td><?= date('d-M-Y', strtotime($row['created_at'])) ?></td>
-                        <td><strong><?= htmlspecialchars($row['name']) ?></strong></td>
-                        <td><a href="mailto:<?= htmlspecialchars($row['email']) ?>" class="text-light"><?= htmlspecialchars($row['email']) ?></a></td>
-                        <td><?= htmlspecialchars($row['phone']) ?></td>
-                        <?php if ($table === 'bookings'): ?>
-                            <td><?= htmlspecialchars($row['package']) ?></td>
-                            <td><?= $row['event_date'] ? date('d-M-Y', strtotime($row['event_date'])) : '-' ?></td>
-                        <?php endif; ?>
-                        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                            <?= htmlspecialchars($row['message'] ?: '-') ?>
-                        </td>
-                        <td>
-                            <span class="badge bg-<?= $row['status'] === 'new' ? 'warning text-dark' : ($row['status'] === 'replied' ? 'info' : 'success') ?>">
-                                <?= ucfirst($row['status']) ?>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <a href="reply.php?table=<?= $table ?>&id=<?= $row['id'] ?>" class="btn btn-sm btn-admin">
-                                    <i class="bi-reply-fill"></i> Reply
-                                </a>
-                                <?php if ($row['status'] === 'new'): ?>
-                                    <a href="mark.php?table=<?= $table ?>&id=<?= $row['id'] ?>&status=replied&page=<?= $page ?>&tab=<?= $activeTab ?>" class="btn btn-sm btn-outline-info">
-                                        <i class="bi-check-lg"></i>
-                                    </a>
-                                <?php elseif ($row['status'] === 'replied'): ?>
-                                    <a href="mark.php?table=<?= $table ?>&id=<?= $row['id'] ?>&status=completed&page=<?= $page ?>&tab=<?= $activeTab ?>" class="btn btn-sm btn-outline-success">
-                                        <i class="bi-check-all"></i>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-                        </td>
-                    </tr>
+<div class="recent-grid">
+    <div class="recent-card">
+        <div class="rc-header">
+            Recent Bookings
+            <a href="bookings.php" class="text-secondary" style="text-decoration:none;">View all &rarr;</a>
+        </div>
+        <div class="rc-body">
+            <?php if (empty($recentBookings)): ?>
+                <div class="recent-item"><span class="text-muted">No bookings yet</span></div>
+            <?php else: ?>
+                <?php foreach ($recentBookings as $b): ?>
+                    <div class="recent-item">
+                        <div class="ri-left">
+                            <div class="ri-name"><?= htmlspecialchars($b['name']) ?></div>
+                            <div class="ri-meta"><?= htmlspecialchars($b['package']) ?> &middot; <?= date('d-M', strtotime($b['created_at'])) ?></div>
+                        </div>
+                        <div class="ri-right">
+                            <span class="badge bg-<?= $b['status'] === 'new' ? 'warning text-dark' : ($b['status'] === 'replied' ? 'info' : 'success') ?>"><?= ucfirst($b['status']) ?></span>
+                            <a href="reply.php?table=bookings&id=<?= $b['id'] ?>" class="btn-sm btn-admin" style="text-decoration:none;padding:2px 10px;font-size:11px;">Reply</a>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
-            </tbody>
-        </table>
+            <?php endif; ?>
+        </div>
     </div>
-
-    <?php if ($totalPages > 1): ?>
-        <nav>
-            <ul class="pagination pagination-sm justify-content-center">
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <li class="page-item <?= $i === $page ? 'active' : '' ?>">
-                        <a class="page-link" href="?tab=<?= $activeTab ?>&page=<?= $i ?>"><?= $i ?></a>
-                    </li>
-                <?php endfor; ?>
-            </ul>
-        </nav>
-    <?php endif; ?>
-<?php endif; ?>
+    <div class="recent-card">
+        <div class="rc-header">
+            Recent Messages
+            <a href="messages.php" class="text-secondary" style="text-decoration:none;">View all &rarr;</a>
+        </div>
+        <div class="rc-body">
+            <?php if (empty($recentMessages)): ?>
+                <div class="recent-item"><span class="text-muted">No messages yet</span></div>
+            <?php else: ?>
+                <?php foreach ($recentMessages as $m): ?>
+                    <div class="recent-item">
+                        <div class="ri-left">
+                            <div class="ri-name"><?= htmlspecialchars($m['name']) ?></div>
+                            <div class="ri-meta"><?= date('d-M g:i A', strtotime($m['created_at'])) ?></div>
+                        </div>
+                        <div class="ri-right">
+                            <span class="badge bg-<?= $m['status'] === 'new' ? 'warning text-dark' : ($m['status'] === 'replied' ? 'info' : 'success') ?>"><?= ucfirst($m['status']) ?></span>
+                            <a href="reply.php?table=contacts&id=<?= $m['id'] ?>" class="btn-sm btn-admin" style="text-decoration:none;padding:2px 10px;font-size:11px;">Reply</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
 <?php require_once __DIR__ . '/includes/sidebar-footer.php'; ?>

@@ -6,7 +6,6 @@ $table = $_GET['table'] ?? '';
 $id = (int)($_GET['id'] ?? 0);
 $status = $_GET['status'] ?? '';
 $page = (int)($_GET['page'] ?? 1);
-$tab = $_GET['tab'] ?? 'bookings';
 $allowedTables = ['bookings', 'contacts'];
 $allowedStatuses = ['replied', 'completed'];
 
@@ -15,5 +14,6 @@ if (in_array($table, $allowedTables) && $id && in_array($status, $allowedStatuse
     $stmt->execute([$status, $id]);
 }
 
-header("Location: index.php?tab=$tab&page=$page");
+$redirect = ($table === 'bookings' ? 'bookings.php' : 'messages.php') . "?page=$page";
+header("Location: $redirect");
 exit;
