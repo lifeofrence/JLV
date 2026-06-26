@@ -241,6 +241,11 @@ select.form-select { cursor: pointer; }
             <a href="<?= assetUrl('admin/cms/settings.php') ?>" class="sidebar-link <?= isActive('/admin/cms/settings.php') ?>">
                 <i class="bi-gear-wide-connected"></i> Settings &amp; SEO
             </a>
+
+            <div class="sidebar-label">Communication</div>
+            <a href="<?= assetUrl('admin/inbox.php') ?>" class="sidebar-link <?= isActive('/admin/inbox.php') ?>">
+                <i class="bi-envelope-fill"></i> Email Inbox
+            </a>
         </nav>
 
         <div class="sidebar-footer-nav">

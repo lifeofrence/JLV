@@ -15,6 +15,8 @@ $grouped = [];
 foreach ($settings as $s) {
     if (str_starts_with($s['setting_key'], 'meta_') || str_starts_with($s['setting_key'], 'og_') || str_starts_with($s['setting_key'], 'twitter_') || str_starts_with($s['setting_key'], 'json_ld')) {
         $grouped['seo'][] = $s;
+    } elseif (str_starts_with($s['setting_key'], 'imap_')) {
+        $grouped['email'][] = $s;
     } else {
         $grouped['general'][] = $s;
     }
@@ -52,6 +54,29 @@ foreach ($settings as $s) {
                             <label class="form-label text-secondary text-uppercase" style="font-size: 12px;"><?= str_replace('_', ' ', $s['setting_key']) ?></label>
                             <?php if (in_array($s['setting_key'], ['meta_keywords', 'json_ld_service_types'])): ?>
                                 <textarea class="form-control" rows="2" name="settings[<?= $s['setting_key'] ?>]"><?= htmlspecialchars($s['setting_value'] ?? '') ?></textarea>
+                            <?php else: ?>
+                                <input type="text" class="form-control" name="settings[<?= $s['setting_key'] ?>]" value="<?= htmlspecialchars($s['setting_value'] ?? '') ?>">
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email / IMAP -->
+        <div class="card bg-dark border-secondary mb-4">
+            <div class="card-header border-secondary">Email Inbox (IMAP)</div>
+            <div class="card-body">
+                <p class="text-muted" style="font-size:13px;margin-bottom:16px;">
+                    Connect the <strong>info@jenniferlamivisuals.com</strong> mailbox to read emails from your admin panel.
+                    Requires the PHP IMAP extension on your server (cPanel usually has it).
+                </p>
+                <div class="row g-3">
+                    <?php foreach ($grouped['email'] as $s): ?>
+                        <div class="col-md-6">
+                            <label class="form-label text-secondary text-uppercase" style="font-size: 12px;"><?= str_replace('_', ' ', $s['setting_key']) ?></label>
+                            <?php if ($s['setting_key'] === 'imap_password'): ?>
+                                <input type="password" class="form-control" name="settings[<?= $s['setting_key'] ?>]" value="<?= htmlspecialchars($s['setting_value'] ?? '') ?>">
                             <?php else: ?>
                                 <input type="text" class="form-control" name="settings[<?= $s['setting_key'] ?>]" value="<?= htmlspecialchars($s['setting_value'] ?? '') ?>">
                             <?php endif; ?>

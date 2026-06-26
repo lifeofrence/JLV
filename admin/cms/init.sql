@@ -104,7 +104,13 @@ INSERT IGNORE INTO cms_settings (setting_key, setting_value) VALUES
 ('og_image', 'images/header.png'),
 ('json_ld_business_name', 'JenniferLamiVisuals'),
 ('json_ld_price_range', '$200-$2500'),
-('json_ld_service_types', 'Wedding Videography,Event Videography,Commercial Video Production,Lifestyle Videography,Social Media Content Creation');
+('json_ld_service_types', 'Wedding Videography,Event Videography,Commercial Video Production,Lifestyle Videography,Social Media Content Creation'),
+-- Email Inbox IMAP settings (update with actual credentials)
+('imap_host', 'mail.jenniferlamivisuals.com'),
+('imap_port', '993'),
+('imap_username', 'info@jenniferlamivisuals.com'),
+('imap_password', ''),
+('imap_encryption', 'ssl');
 
 -- Navigation
 INSERT IGNORE INTO cms_navigation (label, href, sort_order) VALUES
