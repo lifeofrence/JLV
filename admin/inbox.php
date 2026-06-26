@@ -133,7 +133,7 @@ function _trunc($s, $len) {
 }
 ?>
 <style>
-.inbox-layout { display: flex; gap: 0; margin: -24px; min-height: calc(100vh - 61px); max-width: 100vw; overflow-x: hidden; }
+.inbox-layout { display: flex; gap: 0; margin: -24px; min-height: calc(100vh - 61px); }
 .inbox-list { width: 380px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--dark-2); }
 .inbox-list-header { padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .inbox-list-header h5 { margin: 0; font-size: 14px; }

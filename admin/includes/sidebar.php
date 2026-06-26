@@ -27,7 +27,7 @@ $script = $_SERVER['SCRIPT_NAME'];
 body { margin: 0; padding: 0; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background: var(--dark); color: var(--text); }
 
 /* Sidebar */
-.admin-wrapper { display: flex; min-height: 100vh; max-width: 100vw; overflow-x: hidden; }
+.admin-wrapper { display: flex; min-height: 100vh; }
 .admin-sidebar {
     width: var(--sidebar-width); background: var(--dark-2); border-right: 1px solid var(--border);
     display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh;
@@ -200,6 +200,7 @@ select.form-select { cursor: pointer; }
     .topbar-user { font-size: 12px; }
     .topbar-user i { display: none; }
     .table th, .table td { padding: 8px 6px; font-size: 12px; white-space: nowrap; }
+    .table-responsive table { min-width: 800px; }
     .card-body { padding: 12px; }
     .card-header { padding: 10px 12px; font-size: 13px; }
     .booking-detail-card .detail-body { padding: 12px; }
