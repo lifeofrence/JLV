@@ -53,16 +53,8 @@ function isActive($paths) {
 }
 
 function assetUrl($path) {
-    static $baseUrl = null;
-    if ($baseUrl === null) {
-        $docRoot = @realpath($_SERVER['DOCUMENT_ROOT']);
-        $projectRoot = @realpath(dirname(__DIR__, 2));
-        if ($docRoot && $projectRoot && strpos($projectRoot, $docRoot) === 0) {
-            $relative = substr($projectRoot, strlen($docRoot));
-            $baseUrl = rtrim(str_replace('\\', '/', $relative), '/') . '/';
-        } else {
-            $baseUrl = '/';
-        }
-    }
-    return $baseUrl . ltrim($path, '/');
+    $script = $_SERVER['SCRIPT_NAME'];
+    $pos = strpos($script, '/admin');
+    $base = $pos !== false ? substr($script, 0, $pos) : '';
+    return rtrim($base, '/') . '/' . ltrim($path, '/');
 }

@@ -14,9 +14,76 @@ $script = $_SERVER['SCRIPT_NAME'];
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($pageTitle) ?> - JenniferLamiVisuals</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="<?= assetUrl('images/logo.png') ?>">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🎥</text></svg>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+:root {
+    --orange: #ee5007; --orange-hover: #ff6a1a; --orange-glow: rgba(238,80,7,0.25);
+    --dark: #0a0a0a; --dark-2: #111; --dark-3: #1a1a1a; --dark-4: #222;
+    --border: #2a2a2a; --text: #eee; --text-muted: #888; --sidebar-width: 250px;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--dark); color: var(--text);
+}
+.admin-wrapper { display: flex; min-height: 100vh; }
+.admin-sidebar {
+    width: var(--sidebar-width); background: var(--dark-2);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; height: 100vh; z-index: 1040;
+    transition: transform .3s ease; overflow-y: auto;
+}
+.sidebar-brand {
+    padding: 16px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.sidebar-logo { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; border: 1px solid var(--border); flex-shrink: 0; }
+.sidebar-brand-text .brand-name { font-weight: 700; font-size: 14px; line-height: 1.2; color: #fff; display: block; }
+.sidebar-brand-text .brand-sub { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; }
+.sidebar-nav { flex: 1; padding: 8px 0; overflow-y: auto; }
+.sidebar-label { padding: 16px 16px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 600; }
+.sidebar-link {
+    display: flex; align-items: center; gap: 10px; padding: 9px 16px;
+    color: #ccc; text-decoration: none; font-size: 13px;
+    border-left: 3px solid transparent; transition: all .15s ease;
+}
+.sidebar-link i { width: 18px; text-align: center; color: #666; font-size: 15px; transition: color .15s; flex-shrink: 0; }
+.sidebar-link:hover { background: rgba(238,80,7,.06); color: #fff; }
+.sidebar-link:hover i { color: var(--orange); }
+.sidebar-link.active { background: rgba(238,80,7,.1); border-left-color: var(--orange); color: var(--orange); font-weight: 600; }
+.sidebar-link.active i { color: var(--orange); }
+.sidebar-footer-nav { padding: 8px 0; border-top: 1px solid var(--border); flex-shrink: 0; }
+.sidebar-user { padding: 8px 16px 10px; display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 12px; border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+.sidebar-user i { font-size: 16px; flex-shrink: 0; }
+.sidebar-logout { color: #dc3545 !important; }
+.sidebar-logout i { color: #dc3545 !important; }
+.sidebar-logout:hover { background: rgba(220,53,69,.1) !important; }
+.admin-main { flex: 1; margin-left: var(--sidebar-width); min-height: 100vh; display: flex; flex-direction: column; }
+.admin-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 24px; background: var(--dark-2);
+    border-bottom: 1px solid var(--border); position: sticky; top: 0;
+    z-index: 1030; flex-shrink: 0;
+}
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.topbar-title { font-weight: 600; font-size: 16px; color: #fff; }
+.topbar-user { font-size: 13px; color: var(--text-muted); }
+.topbar-user i { margin-right: 6px; color: var(--orange); }
+.sidebar-toggle { background: none; border: 1px solid var(--border); color: #fff; font-size: 18px; padding: 4px 8px; border-radius: 6px; cursor: pointer; display: none; }
+.sidebar-toggle:hover { background: var(--dark-3); }
+.admin-content { padding: 24px; flex: 1; }
+@media (max-width: 991.98px) {
+    .admin-sidebar { transform: translateX(-100%); }
+    .admin-sidebar.show { transform: translateX(0); box-shadow: 0 0 40px rgba(0,0,0,.5); }
+    .admin-main { margin-left: 0; }
+    .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+    .admin-topbar { padding: 10px 16px; }
+    .admin-content { padding: 16px; }
+}
+    </style>
     <link href="<?= assetUrl('admin/style.css') ?>" rel="stylesheet">
 </head>
 <body>
