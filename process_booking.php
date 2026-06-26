@@ -8,6 +8,7 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'PHPMailer/src/Exception.php';
 require 'config_smtp.php';
+require 'admin/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -24,6 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (empty($name) || empty($email) || empty($phone) || empty($date) || empty($package)) {
             throw new Exception("Please fill in all required fields.");
+        }
+
+        // Save to database
+        try {
+            $stmt = $pdo->prepare("INSERT INTO bookings (name, email, phone, event_date, package, message, status) VALUES (?, ?, ?, ?, ?, ?, 'new')");
+            $stmt->execute([$name, $email, $phone, $date, $package, $message]);
+        } catch (Exception $e) {
+            error_log('Database insert failed: ' . $e->getMessage());
         }
 
         // Email to Client
@@ -83,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Email:</strong> <span style='color: #ee5007; float: right;'>$email</span></div>
                 <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Phone:</strong> <span style='color: #ee5007; float: right;'>$phone</span></div>
                 <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Package:</strong> <span style='color: #ee5007; float: right;'>$package</span></div>
-                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Date:</strong> <span style='color: #ee5007; float: right;'>$date</span></div>
+                <div style='border-bottom: 1px solid #222; padding: 10px 0;'><strong>Date:</strong> <span style='color: #ee5007; float: right;'>$formattedDate</span></div>
                 <div style='padding: 10px 0; margin-top: 10px;'>
                     <strong>Message:</strong><br>
                     <span style='color: #aaa; font-size: 14px; display: block; margin-top: 5px;'>$message</span>

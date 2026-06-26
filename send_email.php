@@ -3,6 +3,7 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'PHPMailer/src/Exception.php';
 require 'config_smtp.php';
+require 'admin/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -25,6 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header("Location: error.html?message=Invalid email format.");
         exit;
+    }
+
+    // Save to database
+    try {
+        $stmt = $pdo->prepare("INSERT INTO contacts (name, email, phone, message, status) VALUES (?, ?, ?, ?, 'new')");
+        $stmt->execute([$name, $email, $phone, $message]);
+    } catch (Exception $e) {
+        error_log('Database insert failed: ' . $e->getMessage());
     }
 
     // SMTP Configuration
