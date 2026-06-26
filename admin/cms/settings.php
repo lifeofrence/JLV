@@ -10,6 +10,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo '<div class="alert alert-success m-3">Settings saved! <a href="index.php">Back to CMS</a></div>';
 }
 
+// Auto-seed IMAP settings if missing
+$hasImap = $pdo->query("SELECT COUNT(*) FROM cms_settings WHERE setting_key LIKE 'imap_%'")->fetchColumn();
+if (!$hasImap) {
+    $defaults = [
+        ['imap_host', 'mail.jenniferlamivisuals.com'],
+        ['imap_port', '993'],
+        ['imap_username', 'info@jenniferlamivisuals.com'],
+        ['imap_password', ''],
+        ['imap_encryption', 'ssl'],
+    ];
+    $stmt = $pdo->prepare("INSERT IGNORE INTO cms_settings (setting_key, setting_value) VALUES (?,?)");
+    foreach ($defaults as $d) $stmt->execute($d);
+}
+
 $settings = $pdo->query("SELECT * FROM cms_settings ORDER BY setting_key")->fetchAll(PDO::FETCH_ASSOC);
 $grouped = [];
 foreach ($settings as $s) {

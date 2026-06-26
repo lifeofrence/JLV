@@ -2,20 +2,37 @@
 $pageTitle = 'Email Inbox';
 require_once __DIR__ . '/includes/sidebar.php';
 
-$imapHost = '';
-$imapPort = '993';
-$imapUser = '';
-$imapPass = '';
-$imapEnc = 'ssl';
+// Auto-seed default IMAP rows if they don't exist yet
+$hasImap = $pdo->query("SELECT COUNT(*) FROM cms_settings WHERE setting_key LIKE 'imap_%'")->fetchColumn();
+if (!$hasImap) {
+    $defaults = [
+        ['imap_host', 'mail.jenniferlamivisuals.com'],
+        ['imap_port', '993'],
+        ['imap_username', 'info@jenniferlamivisuals.com'],
+        ['imap_password', ''],
+        ['imap_encryption', 'ssl'],
+    ];
+    $seed = $pdo->prepare("INSERT IGNORE INTO cms_settings (setting_key, setting_value) VALUES (?,?)");
+    foreach ($defaults as $d) $seed->execute($d);
+}
+
 $configOk = false;
+$imap_host = $imap_port = $imap_username = $imap_password = $imap_encryption = '';
 
 $stmt = $pdo->query("SELECT setting_key, setting_value FROM cms_settings WHERE setting_key LIKE 'imap_%'");
 foreach ($stmt as $row) {
-    $$row['setting_key'] = $row['setting_value'];
+    switch ($row['setting_key']) {
+        case 'imap_host': $imap_host = $row['setting_value']; break;
+        case 'imap_port': $imap_port = $row['setting_value']; break;
+        case 'imap_username': $imap_username = $row['setting_value']; break;
+        case 'imap_password': $imap_password = $row['setting_value']; break;
+        case 'imap_encryption': $imap_encryption = $row['setting_value']; break;
+    }
 }
 if (!empty($imap_host) && !empty($imap_username) && !empty($imap_password)) {
     $configOk = true;
 }
+$imap_enc = $imap_encryption ?: 'ssl';
 
 $emails = [];
 $selectedEmail = null;
