@@ -1,131 +1,139 @@
 <?php
 $pageTitle = 'Email Inbox';
-require_once __DIR__ . '/includes/sidebar.php';
 
-// Auto-seed default IMAP rows if they don't exist yet
-$hasImap = $pdo->query("SELECT COUNT(*) FROM cms_settings WHERE setting_key LIKE 'imap_%'")->fetchColumn();
-if (!$hasImap) {
-    $defaults = [
-        ['imap_host', 'mail.jenniferlamivisuals.com'],
-        ['imap_port', '993'],
-        ['imap_username', 'info@jenniferlamivisuals.com'],
-        ['imap_password', ''],
-        ['imap_encryption', 'ssl'],
-    ];
-    $seed = $pdo->prepare("INSERT IGNORE INTO cms_settings (setting_key, setting_value) VALUES (?,?)");
-    foreach ($defaults as $d) $seed->execute($d);
-}
+$inboxError = '';
+try {
+    require_once __DIR__ . '/includes/sidebar.php';
 
-$configOk = false;
-$imap_host = $imap_port = $imap_username = $imap_password = $imap_encryption = '';
-
-$stmt = $pdo->query("SELECT setting_key, setting_value FROM cms_settings WHERE setting_key LIKE 'imap_%'");
-foreach ($stmt as $row) {
-    switch ($row['setting_key']) {
-        case 'imap_host': $imap_host = $row['setting_value']; break;
-        case 'imap_port': $imap_port = $row['setting_value']; break;
-        case 'imap_username': $imap_username = $row['setting_value']; break;
-        case 'imap_password': $imap_password = $row['setting_value']; break;
-        case 'imap_encryption': $imap_encryption = $row['setting_value']; break;
+    $hasImap = $pdo->query("SELECT COUNT(*) FROM cms_settings WHERE setting_key LIKE 'imap_%'")->fetchColumn();
+    if (!$hasImap) {
+        $defaults = [
+            ['imap_host', 'mail.jenniferlamivisuals.com'],
+            ['imap_port', '993'],
+            ['imap_username', 'info@jenniferlamivisuals.com'],
+            ['imap_password', ''],
+            ['imap_encryption', 'ssl'],
+        ];
+        $seed = $pdo->prepare("INSERT IGNORE INTO cms_settings (setting_key, setting_value) VALUES (?,?)");
+        foreach ($defaults as $d) $seed->execute($d);
     }
-}
-if (!empty($imap_host) && !empty($imap_username) && !empty($imap_password)) {
-    $configOk = true;
-}
-$imap_enc = $imap_encryption ?: 'ssl';
 
-$emails = [];
-$selectedEmail = null;
-$error = '';
-$imapAvailable = function_exists('imap_open');
+    $configOk = false;
+    $imap_host = $imap_port = $imap_username = $imap_password = $imap_encryption = '';
 
-if ($configOk && $imapAvailable && isset($_GET['view'])) {
-    $msgNum = (int)$_GET['view'];
-    $mailbox = '{' . $imap_host . ':' . $imap_port . '/' . $imap_enc . '}INBOX';
-    $inbox = @imap_open($mailbox, $imap_username, $imap_password);
-    if ($inbox) {
-        $overview = @imap_fetch_overview($inbox, $msgNum);
-        $structure = @imap_fetchstructure($inbox, $msgNum);
-        $body = '';
-        if ($structure) {
-            if (isset($structure->parts) && count($structure->parts) > 0) {
-                foreach ($structure->parts as $partNo => $part) {
-                    if ($part->ifsubtype && strtolower($part->subtype) === 'html') {
-                        $body = @imap_fetchbody($inbox, $msgNum, $partNo + 1);
-                        break;
+    $stmt = $pdo->query("SELECT setting_key, setting_value FROM cms_settings WHERE setting_key LIKE 'imap_%'");
+    foreach ($stmt as $row) {
+        switch ($row['setting_key']) {
+            case 'imap_host': $imap_host = $row['setting_value']; break;
+            case 'imap_port': $imap_port = $row['setting_value']; break;
+            case 'imap_username': $imap_username = $row['setting_value']; break;
+            case 'imap_password': $imap_password = $row['setting_value']; break;
+            case 'imap_encryption': $imap_encryption = $row['setting_value']; break;
+        }
+    }
+    if (!empty($imap_host) && !empty($imap_username) && !empty($imap_password)) {
+        $configOk = true;
+    }
+    $imap_enc = $imap_encryption ?: 'ssl';
+
+    $emails = [];
+    $selectedEmail = null;
+    $error = '';
+    $imapAvailable = function_exists('imap_open');
+
+    if ($configOk && $imapAvailable && isset($_GET['view'])) {
+        $msgNum = (int)$_GET['view'];
+        $mailbox = '{' . $imap_host . ':' . $imap_port . '/' . $imap_enc . '}INBOX';
+        $inbox = @imap_open($mailbox, $imap_username, $imap_password);
+        if ($inbox) {
+            $overview = @imap_fetch_overview($inbox, $msgNum);
+            $structure = @imap_fetchstructure($inbox, $msgNum);
+            $body = '';
+            if ($structure) {
+                if (isset($structure->parts) && count($structure->parts) > 0) {
+                    foreach ($structure->parts as $partNo => $part) {
+                        if ($part->ifsubtype && strtolower($part->subtype) === 'html') {
+                            $body = @imap_fetchbody($inbox, $msgNum, $partNo + 1);
+                            break;
+                        }
                     }
-                }
-                if (!$body && isset($structure->parts[0])) {
+                    if (!$body && isset($structure->parts[0])) {
+                        $body = @imap_fetchbody($inbox, $msgNum, 1);
+                    }
+                } else {
                     $body = @imap_fetchbody($inbox, $msgNum, 1);
                 }
-            } else {
-                $body = @imap_fetchbody($inbox, $msgNum, 1);
             }
-        }
-        if ($body) {
-            if (isset($structure->encoding) && $structure->encoding === 3) {
-                $body = base64_decode($body);
-            } elseif (isset($structure->encoding) && $structure->encoding === 4) {
-                $body = quoted_printable_decode($body);
-            }
-        }
-        $header = $overview[0] ?? null;
-        if ($header) {
-            $selectedEmail = [
-                'no' => $header->msgno,
-                'from' => $header->from,
-                'fromAddr' => $header->from,
-                'subject' => $header->subject ?? '(No Subject)',
-                'date' => $header->date,
-                'body' => $body,
-            ];
-            // Extract from address properly
-            if (isset($header->from) && is_array($header->from)) {
-                $fromObj = $header->from[0];
-                $selectedEmail['from'] = $fromObj->personal ?? $fromObj->mailbox . '@' . $fromObj->host;
-                $selectedEmail['fromAddr'] = $fromObj->mailbox . '@' . $fromObj->host;
-            } elseif (isset($header->from)) {
-                $selectedEmail['fromAddr'] = $header->from;
-                $selectedEmail['from'] = $header->from;
-            }
-        }
-        @imap_close($inbox);
-    } else {
-        $error = 'Could not open email: ' . imap_last_error();
-    }
-} elseif ($configOk && $imapAvailable) {
-    $mailbox = '{' . $imap_host . ':' . $imap_port . '/' . $imap_enc . '}INBOX';
-    $inbox = @imap_open($mailbox, $imap_username, $imap_password);
-    if ($inbox) {
-        $emailsNum = 50;
-        $check = @imap_check($inbox);
-        $total = $check ? $check->Nmsgs : 0;
-        $start = max(1, $total - $emailsNum + 1);
-        $overviews = @imap_fetch_overview($inbox, "$start:$total");
-        if ($overviews) {
-            foreach (array_reverse($overviews) as $h) {
-                $fromName = $h->from;
-                if (isset($h->from) && is_array($h->from)) {
-                    $fromObj = $h->from[0];
-                    $fromName = $fromObj->personal ?? $fromObj->mailbox . '@' . $fromObj->host;
+            if ($body) {
+                if (isset($structure->encoding) && $structure->encoding === 3) {
+                    $body = base64_decode($body);
+                } elseif (isset($structure->encoding) && $structure->encoding === 4) {
+                    $body = quoted_printable_decode($body);
                 }
-                $emails[] = [
-                    'no' => $h->msgno,
-                    'from' => $fromName,
-                    'subject' => $h->subject ?? '(No Subject)',
-                    'date' => $h->date,
-                    'seen' => ($h->seen ?? 0) ? true : false,
-                ];
             }
+            $header = $overview[0] ?? null;
+            if ($header) {
+                $selectedEmail = [
+                    'no' => $header->msgno,
+                    'from' => $header->from,
+                    'fromAddr' => $header->from,
+                    'subject' => $header->subject ?? '(No Subject)',
+                    'date' => $header->date,
+                    'body' => $body,
+                ];
+                if (isset($header->from) && is_array($header->from)) {
+                    $fromObj = $header->from[0];
+                    $selectedEmail['from'] = $fromObj->personal ?? $fromObj->mailbox . '@' . $fromObj->host;
+                    $selectedEmail['fromAddr'] = $fromObj->mailbox . '@' . $fromObj->host;
+                } elseif (isset($header->from)) {
+                    $selectedEmail['fromAddr'] = $header->from;
+                    $selectedEmail['from'] = $header->from;
+                }
+            }
+            @imap_close($inbox);
+        } else {
+            $error = 'Could not open email: ' . @imap_last_error();
         }
-        @imap_close($inbox);
-    } else {
-        $error = 'IMAP connection failed: ' . imap_last_error();
+    } elseif ($configOk && $imapAvailable) {
+        $mailbox = '{' . $imap_host . ':' . $imap_port . '/' . $imap_enc . '}INBOX';
+        $inbox = @imap_open($mailbox, $imap_username, $imap_password);
+        if ($inbox) {
+            $emailsNum = 50;
+            $check = @imap_check($inbox);
+            $total = $check ? $check->Nmsgs : 0;
+            $start = max(1, $total - $emailsNum + 1);
+            $overviews = @imap_fetch_overview($inbox, "$start:$total");
+            if ($overviews) {
+                foreach (array_reverse($overviews) as $h) {
+                    $fromName = $h->from;
+                    if (isset($h->from) && is_array($h->from)) {
+                        $fromObj = $h->from[0];
+                        $fromName = $fromObj->personal ?? $fromObj->mailbox . '@' . $fromObj->host;
+                    }
+                    $emails[] = [
+                        'no' => $h->msgno,
+                        'from' => $fromName,
+                        'subject' => $h->subject ?? '(No Subject)',
+                        'date' => $h->date,
+                        'seen' => ($h->seen ?? 0) ? true : false,
+                    ];
+                }
+            }
+            @imap_close($inbox);
+        } else {
+            $error = 'IMAP connection failed: ' . @imap_last_error();
+        }
     }
+} catch (Throwable $e) {
+    $inboxError = 'An unexpected error occurred: ' . $e->getMessage();
+}
+
+function _trunc($s, $len) {
+    return function_exists('mb_substr') ? mb_substr($s, 0, $len) : substr($s, 0, $len);
 }
 ?>
 <style>
-.inbox-layout { display: flex; gap: 0; margin: -24px; min-height: calc(100vh - 61px); }
+.inbox-layout { display: flex; gap: 0; margin: -24px; min-height: calc(100vh - 61px); max-width: 100vw; overflow-x: hidden; }
 .inbox-list { width: 380px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--dark-2); }
 .inbox-list-header { padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .inbox-list-header h5 { margin: 0; font-size: 14px; }
@@ -161,6 +169,10 @@ if ($configOk && $imapAvailable && isset($_GET['view'])) {
 }
 </style>
 
+<?php if ($inboxError): ?>
+    <div class="alert alert-danger m-3"><i class="bi-exclamation-triangle-fill"></i> <?= htmlspecialchars($inboxError) ?></div>
+<?php endif; ?>
+
 <div class="inbox-layout">
     <div class="inbox-list">
         <div class="inbox-list-header">
@@ -192,8 +204,8 @@ if ($configOk && $imapAvailable && isset($_GET['view'])) {
             <div class="inbox-emails">
                 <?php foreach ($emails as $e): ?>
                     <a href="inbox.php?view=<?= $e['no'] ?>" class="inbox-item <?= !$e['seen'] ? 'unread' : '' ?>">
-                        <div class="from"><?= htmlspecialchars(mb_substr($e['from'], 0, 40)) ?></div>
-                        <div class="subject"><?= htmlspecialchars(mb_substr($e['subject'], 0, 60)) ?></div>
+                        <div class="from"><?= htmlspecialchars(_trunc($e['from'], 40)) ?></div>
+                        <div class="subject"><?= htmlspecialchars(_trunc($e['subject'], 60)) ?></div>
                         <div class="date"><?= htmlspecialchars($e['date']) ?></div>
                     </a>
                 <?php endforeach; ?>

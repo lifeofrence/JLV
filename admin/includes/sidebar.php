@@ -27,7 +27,7 @@ $script = $_SERVER['SCRIPT_NAME'];
 body { margin: 0; padding: 0; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background: var(--dark); color: var(--text); }
 
 /* Sidebar */
-.admin-wrapper { display: flex; min-height: 100vh; }
+.admin-wrapper { display: flex; min-height: 100vh; max-width: 100vw; overflow-x: hidden; }
 .admin-sidebar {
     width: var(--sidebar-width); background: var(--dark-2); border-right: 1px solid var(--border);
     display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh;
@@ -116,8 +116,7 @@ body { margin: 0; padding: 0; font-family: -apple-system,BlinkMacSystemFont,'Seg
 .form-control[type="file"]::file-selector-button { background: var(--orange); color: #fff; border: none; padding: 5px 14px; border-radius: 8px; font-size: 13px; cursor: pointer; }
 textarea.form-control { resize: vertical; }
 select.form-select { cursor: pointer; }
-.row { display: flex; flex-wrap: wrap; gap: 12px; }
-.row > * { flex: 1 1 auto; }
+.row { display: flex; flex-wrap: wrap; gap: 0; }
 .col-md-1 { flex: 0 0 8.33%; max-width: 8.33%; }
 .col-md-2 { flex: 0 0 16.66%; max-width: 16.66%; }
 .col-md-3 { flex: 0 0 25%; max-width: 25%; }
