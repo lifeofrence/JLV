@@ -105,11 +105,11 @@ $totalPages = ceil($total / $perPage);
                                 </td>
                                 <td>
                                     <div class="d-flex gap-1">
-                                        <a href="reply.php?table=<?= $table ?>&id=<?= $row['id'] ?>" class="btn btn-sm btn-primary" title="Reply"><i class="bi-reply-fill"></i></a>
+                                        <a href="reply.php?table=<?= $table ?>&id=<?= $row['id'] ?>" class="btn btn-sm btn-primary" title="Reply"><i class="bi-reply-fill"></i>Reply</a>
                                         <?php if ($row['status'] === 'new'): ?>
-                                            <a href="mark.php?table=<?= $table ?>&id=<?= $row['id'] ?>&status=replied&page=<?= $page ?>&tab=<?= $activeTab ?>" class="btn btn-sm btn-info" title="Mark as Replied"><i class="bi-check-lg"></i></a>
+                                            <a href="mark.php?table=<?= $table ?>&id=<?= $row['id'] ?>&status=replied&page=<?= $page ?>&tab=<?= $activeTab ?>" class="btn btn-sm btn-info" title="Mark as Replied"><i class="bi-check-lg"></i>Mark as Replied</a>
                                         <?php elseif ($row['status'] === 'replied'): ?>
-                                            <a href="mark.php?table=<?= $table ?>&id=<?= $row['id'] ?>&status=completed&page=<?= $page ?>&tab=<?= $activeTab ?>" class="btn btn-sm btn-success" title="Mark as Completed"><i class="bi-check-all"></i></a>
+                                            <a href="mark.php?table=<?= $table ?>&id=<?= $row['id'] ?>&status=completed&page=<?= $page ?>&tab=<?= $activeTab ?>" class="btn btn-sm btn-success" title="Mark as Completed"><i class="bi-check-all"></i>Mark as Completed</a>
                                         <?php endif; ?>
                                     </div>
                                 </td>
